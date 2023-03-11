@@ -29,10 +29,11 @@ router.post(
       password: req.body.password,
     });
     //Check mail
-    //const emailExist = await User.findOne({ email: req.body.email });
-    //if (emailExist) return res.status(400).send("Email exist");
-    //save
     try {
+      const emailExist = await User.findOne({ email: req.body.email });
+      if (emailExist) return res.status(400).send("Email exist");
+      //save
+
       const savedUser = await user.save();
       res.status(201).send(savedUser);
     } catch (err) {
@@ -44,15 +45,21 @@ router.post(
 //POST LOGIN
 router.post("/login", async (req: any, res: any) => {
   //email validation
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(400).send("Invalid account");
-  //password validation
-  const passVal = await bcrypt.compare(req.body.password, user.password);
-  if (!passVal) return res.status(400).send("Invalid account");
-  //create token and returnc cookie
-  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-  console.log(token);
-  res.cookie("token", token).send(token);
+  try {
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user) return res.status(400).send("Invalid account");
+
+    //password validation
+    const passVal = await bcrypt.compare(req.body.password, user.password);
+    if (!passVal) return res.status(400).send("Invalid account");
+    //create token and returnc cookie
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+    console.log(token);
+    res.cookie("token", token).send(token);
+  } catch (err) {
+    res.status(400).send(err);
+  }
 });
 
 module.exports = router;
