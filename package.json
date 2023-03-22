@@ -19,7 +19,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon backend/src/index.ts",
+    "start": "npm i && ts-node backend/src/index.ts",
+    "dev": "nodemon backend/src/index.ts",
     "frontend": "npm start --prefix frontend",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   }
