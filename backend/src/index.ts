@@ -29,6 +29,7 @@ let uri: any = process.env.DB_CONNECTION;
 //Database
 const connectDB = async () => {
   try {
+    console.log(uri);
     const conn = await mongoose.connect(uri);
     console.log(`MongoDB Connected`);
   } catch (error) {
@@ -38,5 +39,5 @@ const connectDB = async () => {
 };
 
 connectDB().then(() => {
-  app.listen(process.env.PORT || 5000, () => console.log("Server Running"));
+  app.listen(process.env.PORT || 5000, () => console.log(`Server Running `));
 });
