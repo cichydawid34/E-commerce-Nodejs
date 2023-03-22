@@ -27,6 +27,17 @@ if (process.env.NODE_ENV == "production") {
 }
 let uri: any = process.env.DB_CONNECTION;
 //Database
-mongoose.connect(uri, () => console.log("Connected to Database"));
+const connectDB = async () => {
+  try {
+    const conn = mongoose.connect(uri, () =>
+      console.log("Connected to Database")
+    );
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
 
-app.listen(process.env.PORT || 5000, () => console.log("Server Running"));
+connectDB().then(() => {
+  app.listen(process.env.PORT || 5000, () => console.log("Server Running"));
+});
