@@ -23,6 +23,7 @@ if (process.env.NODE_ENV == "production") {
   });
 } else {
   app.use("/", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     res.send("RedMountainShop World");
     console.log("0");
   });
