@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import cors from "cors"
+var cors = require('cors');
 import path from "path";
 require("dotenv").config();
 
